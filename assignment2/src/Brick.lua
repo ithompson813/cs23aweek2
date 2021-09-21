@@ -86,10 +86,6 @@ end
 ]]
 function Brick:hit()
 
-    -- test area
-    -- spawn powerup upon break
-    pu = Powerup(self.x, self.y)
-
     -- set the particle system to interpolate between two colors; in this case, we give
     -- it our self.color but with varying alpha; brighter for higher tiers, fading to 0
     -- over the particle's lifetime (the second color)

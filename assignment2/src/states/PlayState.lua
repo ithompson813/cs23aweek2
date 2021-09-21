@@ -36,7 +36,17 @@ function PlayState:enter(params)
     self.ball.dy = math.random(-50, -60)
 end
 
+local powerups = {}
+
 function PlayState:update(dt)
+
+    if powerups then
+        for k, pu in pairs(powerups) do
+            pu:update(dt)
+            pu:render()
+        end
+    end
+
     if self.paused then
         if love.keyboard.wasPressed('space') then
             self.paused = false
@@ -86,6 +96,13 @@ function PlayState:update(dt)
 
             -- trigger the brick's hit function, which removes it from play
             brick:hit()
+
+    -- test area
+            -- spawn powerup at brick
+            pu = Powerup(brick.x, brick.y)
+            table.insert(powerups, pu)
+
+            
 
             -- if we have enough points, recover a point of health
             if self.score > self.recoverPoints then
@@ -198,6 +215,15 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+
+-----------
+    if powerups then
+        for k, pu in pairs(powerups) do
+            pu:render()
+        end
+    end
+
+
     -- render bricks
     for k, brick in pairs(self.bricks) do
         brick:render()
